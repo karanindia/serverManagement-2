@@ -25,4 +25,4 @@ if __name__ == '__main__':
 	textFilesProc = subprocess.Popen(['find', '/', '-name', '*.txt'], stdout=subprocess.PIPE)
 	textFiles = textFilesProc.stdout.read().strip().split('\n')
 	print(len(textFiles))
-	subprocess.call(['cat', textFiles[500]], shell=False)
+	#subprocess.call(['cat', textFiles[500]], shell=False)
