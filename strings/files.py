@@ -16,3 +16,7 @@ if __name__ == '__main__':
 	#the following shows f state and most importantely , it shows it is closed by
 	#the context manager
 	print(f)
+	#using writelines() method 
+	tFile = open("writelines_outfile.txt", "w")
+	tFile.writelines("%s\n" % i for i in range(10))
+	tFile.close()
