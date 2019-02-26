@@ -35,4 +35,6 @@ print(data)
 
 response = requests.get("https://jsonplaceholder.typicode.com/todos")
 todos = json.loads(response.text) # Deserialization
-print(todos)
+print(todos[0]['title'])
+for i in todos:
+    print(i['title'])
