@@ -2,6 +2,7 @@
 
 import subprocess
 import argparse
+import os
 
 
 class parser:
@@ -18,9 +19,12 @@ class parser:
         self.parser.add_argument('input',
                                  type=str,
                                  help='Kernel Tunables Names')
-        self.parser.add_argument('-v', '--verbose',
-                                 help="increase output verbosity",
-                                 action="store_true")
+        self.parser.add_argument('-p', '--pattern',
+                                 type=str,
+                                 help='Pattern for Finding Kernel Tunable')
+        self.parser.add_argument('-t', '--tunable',
+                                 type=str,
+                                 help='Exact Name of the Kernel Tunable')
         self.args = self.parser.parse_args()
 
     def propagate_args(self) -> argparse:
@@ -32,7 +36,7 @@ class parser:
         return self.args
 
 
-# Instantiating custom_log and arg_parser class
+# Instantiating arg_parser class
 args = parser().propagate_args()
 
 
@@ -52,6 +56,25 @@ def read_parameters(pattern):
         print(ex)
 
 
+def write(tunable):
+    try:
+        os.system(f'echo {tunable} >> /etc/sysctl.conf')
+    except OSError as ex:
+        print(ex)
+
+
 if __name__ == '__main__':
-    # read_sysctl()
-    read_parameters(args.input)
+    if args.input == 'read':
+        """
+            Run it as follows:
+                #./sysctl_conf.py read
+        """
+        read_sysctl()
+    elif args.input == 'read-pattern':
+        """
+            Run it as follows:
+                #./sysctl_conf.py read-pattern -p random
+        """
+        read_parameters(args.pattern)
+    elif args.input == 'write':
+        write('vm.swappiness=40')
